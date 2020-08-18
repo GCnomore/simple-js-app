@@ -35,3 +35,33 @@ var pokemonList = [
     type: 'Fighting',
   },
 ];
+
+for (var i = 0; i < pokemonList.length; i++) {
+  if (pokemonList[i].height > 1.5) {
+    document.write(
+      i +
+        1 +
+        '. ' +
+        pokemonList[i].name +
+        ' (' +
+        'Height: ' +
+        pokemonList[i].height +
+        'M' +
+        ") - Wow, that's big!" +
+        '<br />'
+    );
+  } else {
+    document.write(
+      i +
+        1 +
+        '. ' +
+        pokemonList[i].name +
+        ' (' +
+        'Height: ' +
+        pokemonList[i].height +
+        'M' +
+        ')' +
+        '<br />'
+    );
+  }
+}
