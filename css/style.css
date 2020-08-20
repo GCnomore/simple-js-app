@@ -2,9 +2,26 @@ body {
   line-height: 2;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
 .box {
   width: 320px;
   padding: 10px;
   border: 5px solid grey;
   margin: 10;
+}
+
+.pokeButton {
+  background-color: lightgrey;
+  border: none;
+  width: 200px;
+  height: 30px;
+  margin: 5px 0;
 }
