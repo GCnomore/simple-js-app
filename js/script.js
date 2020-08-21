@@ -51,72 +51,28 @@ var pokemonRepository = (function () {
       pokemonList.push(pokemon);
     }
   }
+  function showDetails(pokemon) {
+    console.log(pokemon);
+  }
+
+  function addListItem(pokemon) {
+    var pokemon_list = document.querySelector('.pokemon-list');
+    var listItem = document.createElement('li');
+    var button = document.createElement('button');
+    button.innerText = pokemon.name;
+    button.classList.add('pokeButton');
+    button.addEventListener('click', () => {
+      showDetails(pokemon);
+    });
+    listItem.appendChild(button);
+    pokemon_list.appendChild(listItem);
+  }
   return {
     add,
     getAll,
-  };
-})();
-
-function showDetails(pokemon) {
-  console.log(pokemon);
-}
-
-function addListItem(pokemon) {
-  var pokemon_list = document.querySelector('.pokemon-list');
-  var listItem = document.createElement('li');
-  var button = document.createElement('button');
-  button.innerText = pokemon.name;
-  button.classList.add('pokeButton');
-  button.addEventListener('click', () => {
-    showDetails(pokemon);
-  });
-
-  //Applying color based on Pokemon's type
-  // var color;
-  // pokemon.type.forEach(function (itemType) {
-  //   if (itemType == 'Electric') {
-  //     color = '<span style="color:yellow">';
-  //   } else if (itemType == 'Fire') {
-  //     color = '<span style="color:red">';
-  //   } else if (itemType == 'Ground') {
-  //     color = '<span style="color:brown">';
-  //   } else if (itemType == 'Phychic') {
-  //     color = '<span style="color:purple">';
-  //   } else if (itemType == 'Water') {
-  //     color = '<span style="color:blue">';
-  //   } else if (itemType == 'Fighting') {
-  //     color = '<span style="color:orange">';
-  //   }
-  // });
-
-  //Adding message to Pokemon based on their height
-  // var size;
-  // if (pokemon.height > 1.5) {
-  //   size = "Wow, that's big!";
-  // } else if (pokemon.height > 0.7 && pokemon.height < 1.5) {
-  //   size = 'Teenage Pokemon';
-  // } else {
-  //   size = 'Small Pokemon';
-  // }
-  // document.write(
-  //   '<div class="box">' +
-  //     pokemon.name +
-  //     '(Height: ' +
-  //     pokemon.height +
-  //     'M)' +
-  //     '<br />' +
-  //     size +
-  //     color +
-  //     '<br />' +
-  //     pokemon.type +
-  //     '</div>'
-  // );
-  listItem.appendChild(button);
-  pokemon_list.appendChild(listItem);
-  return {
     addListItem,
   };
-}
+})();
 
 var hi = {
   name: 'HI',
@@ -127,5 +83,46 @@ pokemonRepository.add(hi);
 
 //Passing Pokemon data to the list
 pokemonRepository.getAll().forEach((pokemon) => {
-  addListItem(pokemon);
+  pokemonRepository.addListItem(pokemon);
 });
+
+//Applying color based on Pokemon's type
+// var color;
+// pokemon.type.forEach(function (itemType) {
+//   if (itemType == 'Electric') {
+//     color = '<span style="color:yellow">';
+//   } else if (itemType == 'Fire') {
+//     color = '<span style="color:red">';
+//   } else if (itemType == 'Ground') {
+//     color = '<span style="color:brown">';
+//   } else if (itemType == 'Phychic') {
+//     color = '<span style="color:purple">';
+//   } else if (itemType == 'Water') {
+//     color = '<span style="color:blue">';
+//   } else if (itemType == 'Fighting') {
+//     color = '<span style="color:orange">';
+//   }
+// });
+
+//Adding message to Pokemon based on their height
+// var size;
+// if (pokemon.height > 1.5) {
+//   size = "Wow, that's big!";
+// } else if (pokemon.height > 0.7 && pokemon.height < 1.5) {
+//   size = 'Teenage Pokemon';
+// } else {
+//   size = 'Small Pokemon';
+// }
+// document.write(
+//   '<div class="box">' +
+//     pokemon.name +
+//     '(Height: ' +
+//     pokemon.height +
+//     'M)' +
+//     '<br />' +
+//     size +
+//     color +
+//     '<br />' +
+//     pokemon.type +
+//     '</div>'
+// );
