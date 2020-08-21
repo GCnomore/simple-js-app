@@ -1,58 +1,81 @@
 var pokemonRepository = (function () {
-  var pokemonList = [
-    {
-      name: 'Pikachu',
-      height: 0.4,
-      type: ['Electric'],
-    },
-    {
-      name: 'Charmeleon',
-      height: 1.1,
-      type: ['Fire'],
-    },
-    {
-      name: 'Alakazam',
-      height: 1.5,
-      type: ['Phychic'],
-    },
-    {
-      name: 'Dugtrio',
-      height: 0.7,
-      type: ['Ground'],
-    },
-    {
-      name: 'Gyarados',
-      height: 6.5,
-      type: ['Water', 'Flying'],
-    },
-    {
-      name: 'Zapdos',
-      height: 1.6,
-      type: ['Electric', 'Flying'],
-    },
-    {
-      name: 'Hitmonlee',
-      height: 1.5,
-      type: ['Fighting'],
-    },
-  ];
+  var pokemonList = [];
+
+  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+
+  function showLodaingMessage() {
+    document.querySelector('.pokedex').classList.add('hidden');
+  }
+
+  function hideLoadingMessage() {
+    document.querySelector('.pokedex').classList.remove('hidden');
+    document.querySelector('.loader').classList.add('hidden');
+  }
+
+  function loadList() {
+    showLodaingMessage();
+    return fetch(apiUrl)
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        json.results.forEach((item) => {
+          var pokemon = {
+            name: item.name,
+            detailsUrl: item.url,
+          };
+          add(pokemon);
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+
+  function loadDetails(item) {
+    showLodaingMessage();
+    //----async
+    var url = item.detailsUrl;
+    //start fetch
+    return (
+      fetch(url) //---- await axios.get
+        .then((response) => {
+          //when fectched, return it into promise object
+          return response.json();
+        })
+        //then use fetched data to add values to pokemon item that will be pushed to pokemon list
+        .then((details) => {
+          //------------------------------------
+          item.imageUrl = details.sprites.front_default;
+          item.height = details.height;
+          item.types = details.types;
+          hideLoadingMessage();
+        })
+        .catch((e) => {
+          console.error(e);
+        })
+    );
+  }
 
   function getAll() {
     return pokemonList;
   }
 
   function add(pokemon) {
-    if (
-      typeof pokemon === 'object' &&
-      'name' in pokemon &&
-      'height' in pokemon &&
-      'type' in pokemon
-    ) {
-      pokemonList.push(pokemon);
-    }
+    pokemonList.push(pokemon);
+    console.log(pokemonList);
+    // if (
+    //   typeof pokemon === 'object' &&
+    //   'name' in pokemon &&
+    //   'height' in pokemon &&
+    //   'type' in pokemon
+    // ) {
+    // }
   }
   function showDetails(pokemon) {
-    console.log(pokemon);
+    loadDetails(pokemon).then(() => {
+      console.log(pokemon);
+    });
   }
 
   function addListItem(pokemon) {
@@ -60,10 +83,10 @@ var pokemonRepository = (function () {
     var listItem = document.createElement('li');
     var button = document.createElement('button');
     button.innerText = pokemon.name;
-    button.classList.add('pokeButton');
     button.addEventListener('click', () => {
       showDetails(pokemon);
     });
+    button.classList.add('pokeButton');
     listItem.appendChild(button);
     pokemon_list.appendChild(listItem);
   }
@@ -71,58 +94,15 @@ var pokemonRepository = (function () {
     add,
     getAll,
     addListItem,
+    loadList,
+    loadDetails,
+    hideLoadingMessage,
   };
 })();
 
-var hi = {
-  name: 'HI',
-  height: 3,
-  type: ['Ground'],
-};
-pokemonRepository.add(hi);
-
-//Passing Pokemon data to the list
-pokemonRepository.getAll().forEach((pokemon) => {
-  pokemonRepository.addListItem(pokemon);
+pokemonRepository.loadList().then(() => {
+  pokemonRepository.getAll().forEach((pokemon) => {
+    pokemonRepository.addListItem(pokemon);
+    pokemonRepository.hideLoadingMessage();
+  });
 });
-
-//Applying color based on Pokemon's type
-// var color;
-// pokemon.type.forEach(function (itemType) {
-//   if (itemType == 'Electric') {
-//     color = '<span style="color:yellow">';
-//   } else if (itemType == 'Fire') {
-//     color = '<span style="color:red">';
-//   } else if (itemType == 'Ground') {
-//     color = '<span style="color:brown">';
-//   } else if (itemType == 'Phychic') {
-//     color = '<span style="color:purple">';
-//   } else if (itemType == 'Water') {
-//     color = '<span style="color:blue">';
-//   } else if (itemType == 'Fighting') {
-//     color = '<span style="color:orange">';
-//   }
-// });
-
-//Adding message to Pokemon based on their height
-// var size;
-// if (pokemon.height > 1.5) {
-//   size = "Wow, that's big!";
-// } else if (pokemon.height > 0.7 && pokemon.height < 1.5) {
-//   size = 'Teenage Pokemon';
-// } else {
-//   size = 'Small Pokemon';
-// }
-// document.write(
-//   '<div class="box">' +
-//     pokemon.name +
-//     '(Height: ' +
-//     pokemon.height +
-//     'M)' +
-//     '<br />' +
-//     size +
-//     color +
-//     '<br />' +
-//     pokemon.type +
-//     '</div>'
-// );
