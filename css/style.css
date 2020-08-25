@@ -1,5 +1,5 @@
 body {
-  line-height: 2;
+  margin: 0;
 }
 
 ul {
@@ -13,6 +13,16 @@ li {
 
 h1 {
   text-align: center;
+  margin: 0;
+}
+
+.pokedex {
+  width: 100%;
+  height: 100%;
+}
+
+.pokedex > h1 {
+  padding: 30px 0 0 0;
 }
 
 .pokemon-list {
@@ -35,15 +45,8 @@ h1 {
   opacity: 0.75;
 }
 
-.box {
-  width: 320px;
-  padding: 10px;
-  border: 5px solid grey;
-  margin: 10;
-}
-
 .pokeButton {
-  background-color: lightgrey;
+  background: lightgrey;
   border: none;
   width: 200px;
   height: 30px;
@@ -58,4 +61,60 @@ h1 {
 
 .hidden {
   display: none;
+}
+
+#modal-container {
+  text-transform: uppercase;
+  font-size: 15px;
+}
+
+.modal {
+  position: fixed;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: white;
+  height: 250px;
+  width: 400px;
+  text-align: center;
+  z-index: 100;
+}
+
+.buttonContainer {
+  text-align: right;
+}
+
+.modal > div > button {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  margin: 5px;
+}
+
+.modal > h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.imgContainer {
+  text-align: center;
+}
+
+.pokeType {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.pokeType > li {
+  padding: 50px 0 0 0;
+}
+
+.modalBackground {
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0.6;
+  width: 100%;
+  height: 100%;
+  top: 0;
 }
